@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Bootcore
- */
-require(__DIR__ . '/../vendor/autoload.php');
-use Zend\Diactoros\Response;
-use Zend\Diactoros\ServerRequestFactory;
-
 if (PHP_SAPI == 'cli-server') {
     // To help the built-in PHP dev server, check if the request was actually for
     // something which should probably be served as a static file
@@ -17,11 +10,26 @@ if (PHP_SAPI == 'cli-server') {
     }
 }
 
+/**
+ * Bootcore
+ */
+require(__DIR__ . '/../vendor/autoload.php');
+use Zend\Diactoros\Response;
+use Zend\Diactoros\ServerRequestFactory;
+use Zend\Diactoros\Stream;
+
 $request = ServerRequestFactory::fromGlobals();
 
 $server = Zend\Diactoros\Server::createServerFromRequest(
     function ($request, $response, $done) {
-        $response->getBody()->write("Hello world!");
+        /**
+         * @var \Psr\Http\Message\ServerRequestInterface $request
+         * @var \Psr\Http\Message\ResponseInterface $response
+         * @var callable $done
+         */
+        $stream = new Stream('php://temp','w');
+        $stream->write("Hello World");
+        return $response->withBody($stream);
     },
     $request);
 

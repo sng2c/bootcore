@@ -78,3 +78,9 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+.idea/
+bootcore.iml
+composer.json
+composer.lock
+public/
+vendor/

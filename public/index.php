@@ -1,5 +1,7 @@
 <?php
 
+
+
 if (PHP_SAPI == 'cli-server') {
     // To help the built-in PHP dev server, check if the request was actually for
     // something which should probably be served as a static file
@@ -10,27 +12,23 @@ if (PHP_SAPI == 'cli-server') {
     }
 }
 
+require(__DIR__ . '/../vendor/autoload.php');
+require(__DIR__ . '/../src/BootCore.php');
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+
 /**
  * Bootcore
  */
-require(__DIR__ . '/../vendor/autoload.php');
-use Zend\Diactoros\Response;
-use Zend\Diactoros\ServerRequestFactory;
-use Zend\Diactoros\Stream;
 
-$request = ServerRequestFactory::fromGlobals();
+$server = new BootCore();
 
-$server = Zend\Diactoros\Server::createServerFromRequest(
-    function ($request, $response, $done) {
-        /**
-         * @var \Psr\Http\Message\ServerRequestInterface $request
-         * @var \Psr\Http\Message\ResponseInterface $response
-         * @var callable $done
-         */
-        $stream = new Stream('php://temp','w');
-        $stream->write("Hello World");
-        return $response->withBody($stream);
-    },
-    $request);
+// Temp Route
+$server->getRoute()->map('GET','/',function (ServerRequestInterface $request, ResponseInterface $response) {
+    $response->getBody()->write('<h1>Hello, World!</h1>');
+    return $response;
+});
 
-$server->listen();
+$server->loadRoutes();
+
+$server->run();

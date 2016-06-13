@@ -1,0 +1,16 @@
+{
+  "name": "sng2c/bootcore",
+  "description": "description_text",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "sng2c",
+      "email": "sng2nara@gmail.com"
+    }
+  ],
+  "require": {
+    "psr/http-message": "^1.0",
+    "zendframework/zend-diactoros": "^1.3"
+  }
+}

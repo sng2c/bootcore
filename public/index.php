@@ -13,7 +13,6 @@ if (PHP_SAPI == 'cli-server') {
 }
 
 require(__DIR__ . '/../vendor/autoload.php');
-require(__DIR__ . '/../src/BootCore.php');
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -21,14 +20,14 @@ use Psr\Http\Message\ServerRequestInterface;
  * Bootcore
  */
 
-$server = new BootCore();
+$core = new \BootCore\BootCore();
 
 // Temp Route
-$server->getRoute()->map('GET','/',function (ServerRequestInterface $request, ResponseInterface $response) {
+$core->getRoute()->map('GET','/',function (ServerRequestInterface $request, ResponseInterface $response) {
     $response->getBody()->write('<h1>Hello, World!</h1>');
     return $response;
 });
 
-$server->loadRoutes();
+$core->loadRoutes();
 
-$server->run();
+$core->run();

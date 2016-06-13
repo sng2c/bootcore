@@ -1,8 +1,11 @@
 {
   "name": "sng2c/bootcore",
-  "description": "description_text",
+  "type": "library",
+  "keywords": ["psr-7","bootstrap","framework"],
+  "description": "Web Bootstrapper which is inspired by Android System.",
+  "homepage": "https://github.com/sng2c/bootcore",
   "minimum-stability": "stable",
-  "license": "proprietary",
+  "license": "MIT",
   "authors": [
     {
       "name": "sng2c",
@@ -13,5 +16,10 @@
     "psr/http-message": "^1.0",
     "zendframework/zend-diactoros": "^1.3",
     "league/route": "3.x-dev"
+  },
+  "autoload": {
+    "psr-4": {
+      "BootCore\\": "src/"
+    }
   }
 }
